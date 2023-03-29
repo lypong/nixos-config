@@ -68,6 +68,7 @@
   users.users.seb = {
     isNormalUser = true;
     extraGroups = [ "wheel" "video" ]; # Enable ‘sudo’ for the user.
+    shell = pkgs.fish;
   };
 
   # List packages installed in system profile. To search, run:

@@ -17,6 +17,7 @@
   ];
 
   programs.home-manager.enable = true;
+  programs.fish = import ./fish.nix;
   wayland.windowManager.hyprland = import ./hyprland.nix;
 }
 
