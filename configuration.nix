@@ -68,10 +68,6 @@
   users.users.seb = {
     isNormalUser = true;
     extraGroups = [ "wheel" "video" ]; # Enable ‘sudo’ for the user.
-    packages = with pkgs; [
-      firefox
-      kitty
-    ];
   };
 
   # List packages installed in system profile. To search, run:
