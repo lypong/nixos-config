@@ -14,7 +14,6 @@ in
     firefox
     alacritty
     wofi
-    fira-code
     fish
   ];
 
