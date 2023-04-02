@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
 
+let setupFirefox = import ./firefox.nix;
+in
 {
 
   home.username = "seb";
@@ -20,7 +22,7 @@
   programs.fish = import ./fish.nix;
   wayland.windowManager.hyprland = import ./hyprland.nix;
 
-  programs.firefox.enable = true;
+  programs.firefox = setupFirefox config;
 
   programs.firefox.profiles.default = {
     extensions = with config.nur.repos.rycee.firefox-addons; [
