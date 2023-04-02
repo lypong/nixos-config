@@ -15,6 +15,7 @@ in
     alacritty
     wofi
     fish
+    waybar
   ];
 
   programs.home-manager.enable = true;
@@ -22,6 +23,8 @@ in
   wayland.windowManager.hyprland = import ./hyprland.nix;
 
   programs.firefox = setupFirefox config;
+
+  programs.waybar.enable = true;
 
 }
 
