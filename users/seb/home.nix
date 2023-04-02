@@ -24,10 +24,5 @@ in
 
   programs.firefox = setupFirefox config;
 
-  programs.firefox.profiles.default = {
-    extensions = with config.nur.repos.rycee.firefox-addons; [
-      ublock-origin
-    ];
-  };
 }
 
