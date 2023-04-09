@@ -1,14 +1,84 @@
 diff --git a/src/modules/wlr/workspace_manager.cpp b/src/modules/wlr/workspace_manager.cpp
-index 6f11e1f..29764a9 100644
+index 6f11e1f..6c806f7 100644
 --- a/src/modules/wlr/workspace_manager.cpp
 +++ b/src/modules/wlr/workspace_manager.cpp
-@@ -454,7 +454,8 @@ auto Workspace::handle_clicked(GdkEventButton *bt) -> bool {
+@@ -11,6 +11,9 @@
+ 
+ #include "gtkmm/widget.h"
+ #include "modules/wlr/workspace_manager_binding.hpp"
++#include <sys/socket.h>
++#include <sys/un.h>
++#include <stdlib.h>
+ 
+ namespace waybar::modules::wlr {
+ 
+@@ -454,7 +457,68 @@ auto Workspace::handle_clicked(GdkEventButton *bt) -> bool {
    if (action.empty())
      return true;
    else if (action == "activate") {
 -    zext_workspace_handle_v1_activate(workspace_handle_);
-+    const std::string command = "hyprctl dispatch workspace " + name_;
-+	  system(command.c_str());
++    const auto SERVERSOCKET = socket(AF_UNIX, SOCK_STREAM, 0);
++
++    if (SERVERSOCKET < 0) {
++        spdlog::error("Couldn't open a socket (1)");
++        return false;
++    }
++
++    // get the instance signature
++    auto instanceSig = getenv("HYPRLAND_INSTANCE_SIGNATURE");
++
++    if (!instanceSig) {
++        spdlog::error("HYPRLAND_INSTANCE_SIGNATURE was not set! (Is Hyprland running?)");
++        return false;
++    }
++
++    std::string instanceSigStr = std::string(instanceSig);
++
++    sockaddr_un serverAddress = {0};
++    serverAddress.sun_family  = AF_UNIX;
++
++    std::string socketPath = "/tmp/hypr/" + instanceSigStr + "/.socket.sock";
++
++    strcpy(serverAddress.sun_path, socketPath.c_str());
++
++    if (connect(SERVERSOCKET, (sockaddr*)&serverAddress, SUN_LEN(&serverAddress)) < 0) {
++        spdlog::error("Couldn't connect to {}. (3)",socketPath);
++        return false;
++    }
++
++    std::string arg = "/dispatch workspace " + name_;
++
++    auto sizeWritten = write(SERVERSOCKET, arg.c_str(), arg.length());
++
++    if (sizeWritten < 0) {
++        spdlog::error("Couldn't write (4)");
++        return false;
++    }
++
++    std::string reply        = "";
++    char        buffer[8192] = {0};
++
++    sizeWritten = read(SERVERSOCKET, buffer, 8192);
++
++    if (sizeWritten < 0) {
++        spdlog::error("Couldn't read (5)");
++        return false;
++    }
++
++    reply += std::string(buffer, sizeWritten);
++
++    while (sizeWritten == 8192) {
++        sizeWritten = read(SERVERSOCKET, buffer, 8192);
++        if (sizeWritten < 0) {
++            spdlog::error("Couldn't read (5)");
++            return false;
++        }
++        reply += std::string(buffer, sizeWritten);
++    }
++
++    close(SERVERSOCKET);
++
++    spdlog::debug("Workspace dispatch succeeded {}", reply);
    } else if (action == "close") {
      zext_workspace_handle_v1_remove(workspace_handle_);
    } else {
