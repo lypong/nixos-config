@@ -6,6 +6,7 @@ let
   setupFish = import ./fish.nix;
   setupHyprland = import ./hyprland.nix;
   setupWaybar = import ./waybar.nix;
+  setupAlacritty = import ./alacritty.nix;
 in
 {
   imports = [
@@ -14,6 +15,7 @@ in
     setupFish
     setupHyprland
     setupWaybar
+    setupAlacritty
   ];
   home.username = "seb";
   home.homeDirectory = "/home/seb";
