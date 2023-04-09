@@ -17,7 +17,7 @@
       # See https://wiki.hyprland.org/Configuring/Keywords/ for more
 
       # Execute your favorite apps at launch
-      #exec-once = waybar
+      exec-once = hyprpaper
 
       # Source a file (multi-file configs)
       # source = ~/.config/hypr/myColors.conf
