@@ -17,7 +17,7 @@ in
       });
     })
   ];
-
+  modules = [./hyprpaper.nix];
   home.username = "seb";
   home.homeDirectory = "/home/seb";
 
