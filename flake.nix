@@ -11,15 +11,20 @@
     hyprland.url = "github:hyprwm/Hyprland";
   };
 
-  outputs = { self, nixpkgs, nur, home-manager, hyprland, ... }: 
-  let
+  outputs = {
+    self,
+    nixpkgs,
+    nur,
+    home-manager,
+    hyprland,
+    ...
+  }: let
     system = "x86_64-linux";
     pkgs = import nixpkgs {
       inherit system;
     };
     lib = nixpkgs.lib;
   in {
-
     #packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
 
     #packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
@@ -39,6 +44,5 @@
         modules = [./configuration.nix];
       };
     };
-
   };
 }

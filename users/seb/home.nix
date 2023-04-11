@@ -1,14 +1,15 @@
-{ config, pkgs, ... }:
-
-let 
+{
+  config,
+  pkgs,
+  ...
+}: let
   setupFirefox = import ./firefox.nix;
   setupHyprpaper = import ./hyprpaper.nix;
   setupFish = import ./fish.nix;
   setupHyprland = import ./hyprland.nix;
   setupWaybar = import ./waybar.nix;
   setupAlacritty = import ./alacritty.nix;
-in
-{
+in {
   imports = [
     setupHyprpaper
     setupFirefox
@@ -33,6 +34,4 @@ in
   ];
 
   programs.home-manager.enable = true;
-
 }
-

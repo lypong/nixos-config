@@ -1,10 +1,14 @@
-{ config, pkgs, ... }:
-
 {
-    programs.alacritty = {
-        enable = true;
-        settings = {
-          opacity = 0.2;
-        }
+  config,
+  pkgs,
+  ...
+}: {
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      window = {
+        opacity = 0.4;
+      };
     };
+  };
 }
