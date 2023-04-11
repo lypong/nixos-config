@@ -113,40 +113,12 @@
         transition-duration: .5s;
     }
 
-    window#waybar.hidden {
-        opacity: 0.2;
-    }
-
-    /*
-    window#waybar.empty {
-        background-color: transparent;
-    }
-    window#waybar.solo {
-        background-color: #FFFFFF;
-    }
-    */
-
-    window#waybar.termite {
-        background-color: #3F3F3F;
-    }
-
-    window#waybar.chromium {
-        background-color: #000000;
-        border: none;
-    }
-
     button {
         /* Use box-shadow instead of border so the text isn't offset */
         box-shadow: inset 0 -3px transparent;
         /* Avoid rounded borders under each button name */
         border: none;
         border-radius: 0;
-    }
-
-    /* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
-    button:hover {
-        background: inherit;
-        box-shadow: inset 0 -3px #ffffff;
     }
 
     #workspaces button {
@@ -166,11 +138,6 @@
 
     #workspaces button.urgent {
         background-color: #eb4d4b;
-    }
-
-    #mode {
-        background-color: #64727D;
-        border-bottom: 3px solid #ffffff;
     }
 
     #clock,
