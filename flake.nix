@@ -41,7 +41,20 @@
     nixosConfigurations = {
       abricot = lib.nixosSystem {
         inherit system;
-        modules = [./configuration.nix];
+        modules = [
+          ./hosts/common/configuration.nix
+          ./hosts/abricot/hostname.nix
+          ./hosts/abricot/hardware-configuration.nix
+        ];
+      };
+      liloco = lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./hosts/common/configuration.nix
+          ./hosts/liloco/hostname.nix
+          ./hosts/liloco/hardware-configuration.nix
+          ./hosts/liloco/networkmanager.nix
+        ];
       };
     };
   };
