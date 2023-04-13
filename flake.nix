@@ -9,6 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprpaper.url = "github:hyprwm/Hyprpaper";
   };
 
   outputs = {
@@ -17,11 +18,16 @@
     nur,
     home-manager,
     hyprland,
+    hyprpaper,
     ...
   }: let
     system = "x86_64-linux";
+    pkg-overlay = final: prev: {
+      hyprpaper = hyprpaper.packages.${prev.system}.hyprpaper;
+    };
     pkgs = import nixpkgs {
       inherit system;
+      overlays = [pkg-overlay];
     };
     lib = nixpkgs.lib;
   in {
