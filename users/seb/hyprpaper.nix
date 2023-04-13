@@ -10,6 +10,6 @@
 
   xdg.configFile."hypr/hyprpaper.conf".text = ''
     preload = ${config.home.homeDirectory}/wallpapers/wallpaper.jpg
-    wallpaper = eDP-1,${config.home.homeDirectory}/wallpapers/wallpaper.jpg
+    wallpaper = ,${config.home.homeDirectory}/wallpapers/wallpaper.jpg
   '';
 }
