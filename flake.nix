@@ -30,18 +30,29 @@
       overlays = [pkg-overlay];
     };
     lib = nixpkgs.lib;
+    common-seb-modules = [
+        ./users/seb/home.nix
+        #./users/seb/hyprland.nix
+        hyprland.homeManagerModules.default
+        nur.nixosModules.nur
+      ];
   in {
     #packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
 
     #packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
     homeConfigurations.seb = home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
-      modules = [
-        ./users/seb/home.nix
-        #./users/seb/hyprland.nix
-        hyprland.homeManagerModules.default
-        nur.nixosModules.nur
-      ];
+      modules = common-seb-modules;
+    };
+
+    homeConfigurations."seb@abricot" = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = common-seb-modules ++ [./users/seb/wm.nix];
+    };
+
+    homeConfigurations."seb@liloco" = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+      modules = common-seb-modules ++ [./users/seb/wm.nix];
     };
 
     nixosConfigurations = {
